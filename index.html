@@ -1,11 +1,442 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mamu — Portfolio</title>
+  <meta name="description" content="Portfolio of Mamu — skills, education, projects, experiences, and contact." />
+  <meta name="theme-color" content="#0f172a" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b0f1a;
+      --card: #0f172a;
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+      --accent: #38bdf8;
+      --accent-2: #a78bfa;
+      --divider: rgba(148,163,184,0.15);
+      --ring: rgba(56,189,248,.35);
+    }
+    [data-theme="light"] {
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --text: #0f172a;
+      --muted: #475569;
+      --accent: #0ea5e9;
+      --accent-2: #8b5cf6;
+      --divider: rgba(2,6,23,0.1);
+      --ring: rgba(14,165,233,.35);
+    }
+    html{scroll-behavior:smooth}
+    body {
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      background:
+        radial-gradient(1200px 600px at 10% 10%, color-mix(in oklab, var(--accent) 20%, transparent), transparent 60%),
+        radial-gradient(1000px 500px at 90% 0%, color-mix(in oklab, var(--accent-2) 16%, transparent), transparent 60%),
+        radial-gradient(1000px 500px at 50% 100%, color-mix(in oklab, var(--accent) 10%, transparent), transparent 70%),
+        var(--bg);
+      color: var(--text);
+      line-height:1.6;
+    }
+    [data-theme="light"] body {
+      background:
+        radial-gradient(1200px 600px at 10% 10%, color-mix(in oklab, var(--accent) 15%, transparent), transparent 60%),
+        radial-gradient(1000px 500px at 90% 0%, color-mix(in oklab, var(--accent-2) 12%, transparent), transparent 60%),
+        radial-gradient(1000px 500px at 50% 100%, color-mix(in oklab, var(--accent) 8%, transparent), transparent 70%),
+        var(--bg);
+    }
+
+    /* Dividers */
+    section + section::before,
+    header.hero + section::before {
+      content: ""; display:block; height:1px; width:100%; margin:0 auto 96px;
+      background: linear-gradient(90deg, transparent,
+        color-mix(in oklab, var(--accent) 35%, var(--divider)),
+        color-mix(in oklab, var(--accent-2) 35%, var(--divider)),
+        transparent);
+    }
+
+    /* Navbar */
+    .navbar { background: rgba(15,23,42,0.7)!important; backdrop-filter: blur(8px); padding-top: 1.05rem; padding-bottom: 1.05rem; }
+    [data-theme="light"] .navbar { background: rgba(255,255,255,0.92)!important; box-shadow: 0 1px 0 rgba(2,6,23,.06); }
+    .navbar .nav-link { color: var(--text); opacity:.9; font-size:1.05rem }
+    .navbar .nav-link:hover { opacity:1 }
+
+    /* Buttons */
+    .btn-accent { background: var(--accent); color: #0b0f1a; border: 1px solid var(--accent); border-radius: 999px; padding:.6rem 1.1rem; font-weight:600; transition: background .2s, box-shadow .2s, transform .2s }
+    .btn-accent:hover, .btn-accent:focus { background: var(--accent); color:#0b0f1a; box-shadow: 0 6px 18px var(--ring); transform: translateY(-1px); }
+
+    /* Cards + utilities */
+    .card-modern { background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04)); border: 1px solid rgba(148,163,184,0.3); border-radius: 1rem; box-shadow: 0 10px 30px rgba(2,6,23,0.35); }
+    [data-theme="light"] .card-modern { background: linear-gradient(180deg, rgba(15,23,42,0.02), rgba(15,23,42,0.01)); border-color: rgba(2,6,23,0.06); box-shadow: 0 12px 22px rgba(2,6,23,0.05); }
+    .muted { color: var(--muted); }
+    .muted-strong { color: color-mix(in oklab, var(--text) 85%, var(--muted) 15%); }
+    .gradient-text { background: linear-gradient(90deg, var(--accent), var(--accent-2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .section { padding: 106px 0; }
+
+    /* HERO */
+    header.hero { padding-top: 170px; padding-bottom: 32px; }
+    .hero-photo { width:100%; height:520px; object-fit:cover; border-radius:1rem; box-shadow: 0 12px 36px rgba(2,6,23,.4); }
+
+    /* Skills */
+    .badge-skill { background: rgba(148,163,184,0.12); color: var(--text); border:1px dashed rgba(148,163,184,0.3); border-radius:999px; padding:.35rem .65rem; font-weight:500 }
+
+    /* Contact icons */
+    .contact-icons a{ display:inline-flex; align-items:center; justify-content:center; width:52px; height:52px; border-radius:50%; background: rgba(148,163,184,.25); color: var(--text); font-size:1.2rem; transition:.25s }
+    .contact-icons a:hover { background: var(--accent); color:#0b0f1a; transform: translateY(-2px); }
+
+    footer { background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02)); border-top:1px solid rgba(148,163,184,0.25); }
+    .theme-toggle { border: 1px solid rgba(148,163,184,0.35); border-radius:999px; padding:.45rem .65rem; background: transparent; color: var(--text) }
+
+    /* EDUCATION TIMELINE */
+    .timeline { position: relative; padding-left: 28px; }
+    .timeline::before { content:""; position:absolute; left:10px; top:0; bottom:0; width:2px; background: linear-gradient(var(--accent), var(--accent-2)); opacity:.6 }
+    .timeline-item { position: relative; margin-bottom: 24px; }
+    .timeline-item:last-child { margin-bottom: 0; }
+    .timeline-dot { position:absolute; left:2px; top:18px; width:16px; height:16px; border-radius:50%; background: var(--card); border:3px solid var(--accent); box-shadow: 0 0 0 3px rgba(56,189,248,.15); }
+    .timeline-card { margin-left: 24px; }
+
+    /* Mobile spacing fixes */
+    @media (max-width: 991px) {
+      .navbar .btn-accent { margin-top: 0.75rem; }
+    }
+    @media (max-width: 576px) {
+      .container { padding-left: 1.65rem; padding-right: 1.55rem; }
+    }
+
+    /* ============== REVEAL ANIMATIONS ============== */
+    @media (prefers-reduced-motion: no-preference) {
+      .reveal { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; will-change: opacity, transform; }
+      .reveal.left  { transform: translateX(-24px); }
+      .reveal.right { transform: translateX(24px); }
+      .reveal.visible { opacity: 1; transform: none; }
+      /* Slightly faster for small UI bits */
+      .reveal.fast { transition-duration: .45s; }
+    }
+  </style>
 </head>
 <body>
-    <h1>Hello from Mamu’s portfolio!</h1>
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-expand-lg fixed-top" data-bs-theme="dark">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="#home">Mamu<span style="color:var(--accent)">.</span></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav"><span class="navbar-toggler-icon"></span></button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0 gap-lg-3 align-items-lg-center">
+          <li class="nav-item"><a class="nav-link" href="#skills">Skills</a></li>
+          <li class="nav-item"><a class="nav-link" href="#education">Education</a></li>
+          <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
+          <li class="nav-item"><a class="nav-link" href="#experiences">Experiences</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+          <li class="nav-item"><button id="themeToggle" class="theme-toggle ms-lg-2" type="button" aria-label="Toggle theme"><i class="bi bi-moon-stars" id="themeIcon"></i></button></li>
+          <li class="nav-item"><a class="btn btn-accent ms-lg-2" href="#contact"><i class="bi bi-send me-1"></i>Hire me</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header id="home" class="section hero">
+    <div class="container">
+      <div class="row align-items-center g-4">
+        <div class="col-lg-7">
+          <p class="muted mb-2 reveal fast">Hello, I'm</p>
+          <h1 class="display-4 fw-bold reveal">Mamu — <span class="gradient-text">Developer & Designer</span></h1>
+          <p class="lead mt-3 mb-4 muted reveal">I craft fast, accessible web experiences with a focus on clean design and measurable impact.</p>
+          <div class="d-flex gap-2 reveal fast">
+            <a href="assets/Mamu-CV.pdf" class="btn btn-accent" download><i class="bi bi-file-earmark-arrow-down me-1"></i>Download CV</a>
+            <a href="#contact" class="btn btn-accent"><i class="bi bi-envelope me-1"></i>Contact</a>
+          </div>
+          <div class="d-flex gap-3 mt-4 reveal fast">
+            <a href="#" aria-label="GitHub"><i class="bi bi-github fs-4"></i></a>
+            <a href="#" aria-label="LinkedIn"><i class="bi bi-linkedin fs-4"></i></a>
+            <a href="#" aria-label="Twitter"><i class="bi bi-twitter-x fs-4"></i></a>
+          </div>
+        </div>
+        <div class="col-lg-5">
+          <img class="hero-photo reveal right" src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=1200&auto=format&fit=crop" alt="Portrait of Mamu" />
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- SKILLS -->
+  <section id="skills" class="section">
+    <div class="container">
+      <h2 class="fw-bold mb-4 reveal">Skills & tools</h2>
+      <div class="row g-3" data-stagger>
+        <div class="col-lg-3">
+          <div class="card-modern p-3 h-100 reveal">
+            <h3 class="h6 text-uppercase muted">Core</h3>
+            <div class="d-flex flex-wrap gap-2 mt-2">
+              <span class="badge-skill">HTML5</span>
+              <span class="badge-skill">CSS3</span>
+              <span class="badge-skill">JavaScript</span>
+              <span class="badge-skill">Bootstrap</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3">
+          <div class="card-modern p-3 h-100 reveal">
+            <h3 class="h6 text-uppercase muted">Frameworks</h3>
+            <div class="d-flex flex-wrap gap-2 mt-2">
+              <span class="badge-skill">React</span>
+              <span class="badge-skill">Next.js</span>
+              <span class="badge-skill">Node.js</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3">
+          <div class="card-modern p-3 h-100 reveal">
+            <h3 class="h6 text-uppercase muted">Design</h3>
+            <div class="d-flex flex-wrap gap-2 mt-2">
+              <span class="badge-skill">Figma</span>
+              <span class="badge-skill">Wireframing</span>
+              <span class="badge-skill">A11y</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3">
+          <div class="card-modern p-3 h-100 reveal">
+            <h3 class="h6 text-uppercase muted">Infra</h3>
+            <div class="d-flex flex-wrap gap-2 mt-2">
+              <span class="badge-skill">Git</span>
+              <span class="badge-skill">Vercel</span>
+              <span class="badge-skill">Netlify</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EDUCATION (Vertical timeline) -->
+  <section id="education" class="section">
+    <div class="container">
+      <h2 class="fw-bold mb-4 reveal">Education</h2>
+      <div class="timeline">
+        <div class="timeline-item reveal left">
+          <span class="timeline-dot"></span>
+          <div class="timeline-card card-modern p-4">
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+              <h3 class="h5 m-0">University</h3>
+              <span class="badge-skill">2018–2022</span>
+            </div>
+            <div class="muted mt-1 mb-2">B.Sc. in Computer Science — University of Somewhere</div>
+            <ul class="m-0 small muted">
+              <li>Graduated with honors, CGPA 3.8/4.0</li>
+              <li>Capstone: Real-time dashboard project</li>
+            </ul>
+          </div>
+        </div>
+        <div class="timeline-item reveal left">
+          <span class="timeline-dot"></span>
+          <div class="timeline-card card-modern p-4">
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+              <h3 class="h5 m-0">College</h3>
+              <span class="badge-skill">2016–2018</span>
+            </div>
+            <div class="muted mt-1 mb-2">Science — City College</div>
+            <ul class="m-0 small muted">
+              <li>Major in Mathematics & Physics</li>
+              <li>Graduated with distinction</li>
+            </ul>
+          </div>
+        </div>
+        <div class="timeline-item reveal left">
+          <span class="timeline-dot"></span>
+          <div class="timeline-card card-modern p-4">
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+              <h3 class="h5 m-0">School</h3>
+              <span class="badge-skill">2014–2016</span>
+            </div>
+            <div class="muted mt-1 mb-2">High School Diploma — Central High</div>
+            <ul class="m-0 small muted">
+              <li>Top 5% of graduating class</li>
+              <li>Science stream, Mathematics focus</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects" class="section">
+    <div class="container">
+      <div class="d-flex align-items-end justify-content-between mb-4">
+        <h2 class="fw-bold m-0 reveal">Featured projects</h2>
+        <a href="#" class="muted reveal fast">View all</a>
+      </div>
+      <div class="row g-4" data-stagger>
+        <div class="col-md-6 col-lg-4">
+          <article class="card-modern p-3 h-100 reveal">
+            <img class="img-fluid rounded mb-3" src="https://images.unsplash.com/photo-1522071901873-411886a10004?q=80&w=1200&auto=format&fit=crop" alt="Project screenshot">
+            <h3 class="h5">Project Alpha</h3>
+            <p class="muted small">SaaS analytics dashboard with real-time charts and role-based access.</p>
+            <div class="d-flex flex-wrap gap-2 mt-2">
+              <span class="badge-skill">React</span>
+              <span class="badge-skill">Node</span>
+              <span class="badge-skill">Postgres</span>
+            </div>
+            <div class="d-flex gap-3 mt-3">
+              <a href="#"><i class="bi bi-box-arrow-up-right me-1"></i>Live</a>
+              <a href="#"><i class="bi bi-github me-1"></i>Code</a>
+            </div>
+          </article>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <article class="card-modern p-3 h-100 reveal">
+            <img class="img-fluid rounded mb-3" src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?q=80&w=1200&auto=format&fit=crop" alt="Project screenshot">
+            <h3 class="h5">Project Beta</h3>
+            <p class="muted small">E-commerce storefront with headless CMS and custom checkout.</p>
+            <div class="d-flex flex-wrap gap-2 mt-2">
+              <span class="badge-skill">Next.js</span>
+              <span class="badge-skill">Stripe</span>
+              <span class="badge-skill">Headless CMS</span>
+            </div>
+            <div class="d-flex gap-3 mt-3">
+              <a href="#"><i class="bi bi-box-arrow-up-right me-1"></i>Live</a>
+              <a href="#"><i class="bi bi-github me-1"></i>Code</a>
+            </div>
+          </article>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <article class="card-modern p-3 h-100 reveal">
+            <img class="img-fluid rounded mb-3" src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1200&auto=format&fit=crop" alt="Project screenshot">
+            <h3 class="h5">Project Gamma</h3>
+            <p class="muted small">Marketing microsite with animations, high Lighthouse scores.</p>
+            <div class="d-flex flex-wrap gap-2 mt-2">
+              <span class="badge-skill">Vanilla JS</span>
+              <span class="badge-skill">GSAP</span>
+              <span class="badge-skill">Web Vitals</span>
+            </div>
+            <div class="d-flex gap-3 mt-3">
+              <a href="#"><i class="bi bi-box-arrow-up-right me-1"></i>Live</a>
+              <a href="#"><i class="bi bi-github me-1"></i>Code</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCES -->
+  <section id="experiences" class="section">
+    <div class="container">
+      <h2 class="fw-bold mb-4 reveal">Experiences</h2>
+      <div class="card-modern p-4 reveal">
+        <div class="row g-3 align-items-center">
+          <div class="col-md-3"><div class="fw-semibold">2023 — Present</div></div>
+          <div class="col-md-9">
+            <h3 class="h5 mb-1">Frontend Developer — <span class="muted">Acme Co.</span></h3>
+            <p class="muted small mb-0">Built component libraries, improved Core Web Vitals by 35%, and led migration to Bootstrap 5.</p>
+          </div>
+        </div>
+        <hr class="border-secondary-subtle">
+        <div class="row g-3 align-items-center">
+          <div class="col-md-3"><div class="fw-semibold">2021 — 2023</div></div>
+          <div class="col-md-9">
+            <h3 class="h5 mb-1">Junior Web Developer — <span class="muted">Startup XYZ</span></h3>
+            <p class="muted small mb-0">Developed landing pages and interactive components; maintained high accessibility standards.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="section">
+    <div class="container">
+      <h2 class="fw-bold mb-4 text-center reveal">Get In Touch</h2>
+      <div class="d-flex flex-wrap justify-content-center gap-3 contact-icons reveal fast">
+        <a href="mailto:hello@example.com" aria-label="Email"><i class="bi bi-envelope"></i></a>
+        <a href="#" aria-label="GitHub"><i class="bi bi-github"></i></a>
+        <a href="#" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+        <a href="#" aria-label="Figma"><i class="bi bi-figma"></i></a>
+        <a href="#" aria-label="Dev.to"><i class="bi bi-code-slash"></i></a>
+        <a href="#" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+        <a href="#" aria-label="WhatsApp"><i class="bi bi-whatsapp"></i></a>
+        <a href="#" aria-label="Telegram"><i class="bi bi-telegram"></i></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="py-4 mt-2">
+    <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
+      <div class="small">© <span id="year"></span> Mamu. All rights reserved.</div>
+      <a href="#home" class="btn btn-accent" aria-label="Back to top"><i class="bi bi-arrow-up"></i></a>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Current year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Theme toggle with persistence
+    (function(){
+      const root = document.documentElement;
+      const nav = document.querySelector('.navbar');
+      const stored = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const initial = stored || (prefersDark ? 'dark' : 'light');
+      function applyTheme(t){
+        root.setAttribute('data-theme', t);
+        nav && nav.setAttribute('data-bs-theme', t === 'dark' ? 'dark' : 'light');
+        const icon = document.getElementById('themeIcon');
+        if(icon){ icon.className = (t === 'dark') ? 'bi bi-moon-stars' : 'bi bi-sun'; }
+      }
+      applyTheme(initial);
+      const btn = document.getElementById('themeToggle');
+      btn && btn.addEventListener('click', function(){
+        const next = (root.getAttribute('data-theme') === 'dark') ? 'light' : 'dark';
+        localStorage.setItem('theme', next);
+        applyTheme(next);
+      });
+    })();
+
+   // ========= Reveal on scroll (re-triggers) =========
+(function(){
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const revealEls = Array.from(document.querySelectorAll('.reveal'));
+  const staggerParents = Array.from(document.querySelectorAll('[data-stagger]'));
+
+  // Stagger: 80ms step for children
+  staggerParents.forEach(parent => {
+    parent.querySelectorAll('.reveal').forEach((el, i) => {
+      el.style.transitionDelay = (i * 80) + 'ms';
+    });
+  });
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');     // show when in view
+      } else {
+        entry.target.classList.remove('visible');  // reset when out of view
+      }
+    });
+  }, { threshold: 0.2, rootMargin: '0px 0px -5% 0px' });
+
+  revealEls.forEach(el => io.observe(el));
+
+  // Make sure in-view stuff is visible on load/refresh
+  window.addEventListener('load', () => {
+    revealEls.forEach(el => {
+      const r = el.getBoundingClientRect();
+      if (r.top < window.innerHeight * 0.8 && r.bottom > 0) el.classList.add('visible');
+    });
+  }, { once: true });
+})();
+
+  </script>
 </body>
 </html>
